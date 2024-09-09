@@ -1,25 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { getUserProfile, updateProfile } from "../../api/auth";
 import Card from "../../components/Layout/Card";
 import Button from "../../components/Layout/Button";
-import { useCustomMutation } from "../../hooks/useCustomMutation";
-import { queryKeys } from "../../queries/queryKey";
+import { useGetUserProfileQuery } from "../../queries/useQuerys";
+import { useUpdateNicknameMutation } from './../../queries/useMutations';
 
 const Profile = () => {
   const [nickname, setNickname] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
-  
-  // 사용자 프로필 가져오기
-  const { data, isLoading } = useQuery({
-    queryKey: queryKeys.userController.userInfo(),
-    queryFn: getUserProfile,
-  });
+  const { data, isPending } = useGetUserProfileQuery();
+  const { mutate: updateNickname, data: updateNicknameData } = useUpdateNicknameMutation();
 
-  // 닉네임 업데이트
-  const { mutate: updateNickname, data: updateNicknameData } =
-    useCustomMutation(updateProfile, queryKeys.userController.userInfo());
-  
   useEffect(() => {
     if (data && data.nickname && nickname !== data.nickname)
       setNickname(data.nickname);
@@ -30,12 +20,12 @@ const Profile = () => {
   // 닉네임 업데이트 핸들러
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    
+
     updateNickname(nickname);
   };
 
-  if (isLoading) return <h2>데이터가 없습니다.</h2>;
-  
+  if (isPending) return <h2>데이터가 없습니다.</h2>;
+
   return (
     <Card className="w-[420px]">
       <form

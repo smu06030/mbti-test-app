@@ -1,19 +1,13 @@
 import React from "react";
-import { getTestResults } from "../../api/testResults";
 import { useUserStore } from "../../store/userStore";
 import TestResultItem from "../../components/Result/TestResultItem";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "../../queries/queryKey";
+import { useGetTestResultsQuery } from "../../queries/useQuerys";
 
 const Results = () => {
   const userInfo = useUserStore((state) => state.userInfo);
+  const { data: results, isPending } = useGetTestResultsQuery();
 
-  const { data: results, isLoading } = useQuery({
-    queryKey: queryKeys.resultController.results(),
-    queryFn: getTestResults,
-  });
-
-  if(isLoading) return <h2>데이터가 없습니다.</h2>
+  if (isPending) return <h2>데이터가 없습니다.</h2>;
 
   return (
     <div className="w-full flex flex-col items-center justify-center bg-white shadow-lg rounded-lg p-8">
