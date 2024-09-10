@@ -7,7 +7,7 @@ import { updateProfile } from "../api/auth";
 // 공개, 비공개 전환 업데이트
 export const useUpdateVisibilityMutaion = () => {
   const queryClient = useQueryClient();
-
+  
   return useMutation({
     mutationFn: updateTestResultVisibility,
     onSuccess: () => {

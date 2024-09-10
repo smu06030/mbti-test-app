@@ -4,7 +4,7 @@
 
 본인의 MBTI를 테스트해 볼 수 있는 사이트입니다.
 
-배포 링크 : 
+배포 링크 : https://mbti-test-app-six.vercel.app/ <br />
 깃허브 링크 : https://github.com/smu06030/mbti-test-app
 
 ## 🗂️ 파일 구조
