@@ -12,7 +12,7 @@ const TestResultItem = ({ result }) => {
   const isOwner = result.userId === userInfo.userId;
   const formattedDate = new Date(result.date).toLocaleString();
   const description = MBTI_DESCRIPTIONS[result.result] || "MBTI 유형 설명을 찾을 수 없습니다.";
-
+  
   // 공개, 비공개 토글 이벤트
   const handleToggleVisibility = () => {
     const newVisibility = !result.visibility;
