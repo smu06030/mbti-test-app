@@ -2,11 +2,12 @@ import React from "react";
 import { useUserStore } from "../../store/userStore";
 import { useDeleteTestResultMutaion, useUpdateVisibilityMutaion, } from "../../queries/useMutations";
 import { MBTI_DESCRIPTIONS } from "../../constants/mbtiDescriptions";
+import Loading from "../../assets/Loading";
 
 const TestResultItem = ({ result }) => {
   const userInfo = useUserStore((state) => state.userInfo);
-  const { mutate: updateMutate } = useUpdateVisibilityMutaion();
-  const { mutate: deleteMutate } = useDeleteTestResultMutaion();
+  const { mutate: updateMutate, isPending: loading } = useUpdateVisibilityMutaion();
+  const { mutate: deleteMutate, isPending: loadings } = useDeleteTestResultMutaion();
 
   // 게시글 작성자, 날짜 포멧, 설명
   const isOwner = result.userId === userInfo.userId;
@@ -39,13 +40,13 @@ const TestResultItem = ({ result }) => {
             onClick={handleToggleVisibility}
             className="bg-blue-500 py-2 px-4 rounded-lg text-sm hover:bg-blue-600 transition"
           >
-            {result.visibility ? "비공개로 전환" : "공개로 전환"}
+            {loading ? <Loading /> : result.visibility ? "비공개로 전환" : "공개로 전환"}
           </button>
           <button
             onClick={handleDelete}
             className="bg-red-500 py-2 px-4 rounded-lg text-sm hover:bg-red-600 transition"
           >
-            삭제
+            {loadings ? <Loading /> : "삭제"}
           </button>
         </div>
       )}
